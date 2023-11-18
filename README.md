@@ -1,1 +1,1 @@
-![Model]https://github.com/CherryDecentralized/iamhuman-pledge-service/blob/6f75ffff251dafdbeab16d003c32bb7ed971045c/model.png
+![Model](https://github.com/CherryDecentralized/iamhuman-pledge-service/blob/6f75ffff251dafdbeab16d003c32bb7ed971045c/model.png)
