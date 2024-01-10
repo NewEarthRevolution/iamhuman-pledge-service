@@ -60,7 +60,7 @@ router.get('/latest-pledges', (req, res) => __awaiter(void 0, void 0, void 0, fu
         const latestPledges = yield Pledge_1.default.find()
             .sort({ createdAt: -1 })
             .limit(10) // Adjust the limit as needed
-            .select('-email'); // Exclude email field
+            .select('name location.countryName -_id');
         res.json(latestPledges);
     }
     catch (error) {

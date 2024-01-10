@@ -26,7 +26,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const LocationSchema = new mongoose_1.Schema({
     countryName: { type: String, required: true },
-    countryCodeISO: { type: String, required: true },
 });
 const PledgeSchema = new mongoose_1.Schema({
     name: { type: String, required: true },

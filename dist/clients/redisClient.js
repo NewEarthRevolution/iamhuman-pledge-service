@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const redis_1 = require("redis");
+require('dotenv').config();
 class RedisClient {
     constructor() {
         this.reconnectAttempts = 0;
-        this.client = (0, redis_1.createClient)();
-        this.subscriber = (0, redis_1.createClient)();
+        this.client = (0, redis_1.createClient)({ url: process.env.REDIS_URI });
         this.initializeEventHandlers();
     }
     initializeEventHandlers() {
@@ -49,12 +49,6 @@ class RedisClient {
     }
     quit() {
         this.client.quit();
-    }
-    subscribe(channel, callback) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.subscriber.connect();
-            this.subscriber.subscribe(channel, callback);
-        });
     }
     publish(channel, message) {
         return __awaiter(this, void 0, void 0, function* () {

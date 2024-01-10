@@ -14,18 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllPledges = exports.createPledge = void 0;
 const Pledge_1 = __importDefault(require("../models/Pledge"));
-const ipLocationService_1 = __importDefault(require("./ipLocationService"));
 const createPledge = (pledgeData, ipAddress) => __awaiter(void 0, void 0, void 0, function* () {
-    const locationData = yield (0, ipLocationService_1.default)(ipAddress); // Await the asynchronous call
-    if (!locationData) {
-        throw new Error("Location data could not be retrieved");
-    }
     const pledge = new Pledge_1.default({
         name: pledgeData.name,
         email: pledgeData.email,
         location: {
-            countryCodeISO: locationData.countryCodeISO,
-            countryName: locationData.countryName
+            countryCodeISO: pledgeData.location.countryCodeISO,
+            countryName: pledgeData.location.countryName
         }
     });
     yield pledge.save();

@@ -1,19 +1,13 @@
 import Pledge, { InPledge, IPledge } from '../models/Pledge';
-import getLocationFromIp from './ipLocationService';
 
-export const createPledge = async (pledgeData: InPledge, ipAddress: string): Promise<IPledge> => {
-  const locationData = await getLocationFromIp(ipAddress); // Await the asynchronous call
-  
-  if (!locationData) {
-    throw new Error("Location data could not be retrieved");
-  }
+export const createPledge = async (pledgeData: InPledge): Promise<IPledge> => {
 
   const pledge = new Pledge({
     name: pledgeData.name,
     email: pledgeData.email,
     location: {
-      countryCodeISO: locationData.countryCodeISO,
-      countryName: locationData.countryName
+      countryCodeISO: pledgeData.location.countryCodeISO,
+      countryName: pledgeData.location.countryName
     }
   });
   await pledge.save();

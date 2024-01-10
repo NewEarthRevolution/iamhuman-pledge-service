@@ -2,15 +2,18 @@ import express from 'express';
 import * as pledgeService from '../services/pledgeService';
 import { CustomRequest } from '../types/express';
 import Pledge from '../models/Pledge'; // Adjust import path as needed
+import cors from 'cors'; // Import cors middleware
 
 
 const router = express.Router();
 
-router.post('/pledges', async (req, res) => {
+router.post('/pledges', cors({
+  origin: ['http://localhost:3000', 'https://iamhuman.network'],
+  optionsSuccessStatus: 204
+}), async (req, res) => {
   try {
-    const clientIp = grabIpFromReq(req)
-
-    const newPledge = await pledgeService.createPledge(req.body, "147.235.221.149");
+    res.header('Access-Control-Allow-Origin', ['http://localhost:3000', 'https://iamhuman.network']); // You can specify multiple origins if needed
+    const newPledge = await pledgeService.createPledge(req.body);
     res.status(201).json(newPledge);
   } catch (error) {
     // Check if error is an instance of Error
@@ -26,8 +29,8 @@ router.get('/latest-pledges', async (req, res) => {
   try {
     const latestPledges = await Pledge.find()
                                       .sort({ createdAt: -1 })
-                                      .limit(10) // Adjust the limit as needed
-                                      .select('name location.countryName -_id');
+                                      .limit(10000) // Adjust the limit as needed
+                                      .select('name location.countryName location.countryCodeISO -_id ');
     res.json(latestPledges);
   } catch (error) {
     // Check if error is an instance of Error

@@ -1,12 +1,11 @@
 import { createClient, RedisClientType } from 'redis';
+require('dotenv').config();
 
 class RedisClient {
     private client: RedisClientType;
-    private subscriber: RedisClientType;
     private reconnectAttempts = 0;
     constructor() {
-        this.client = createClient();
-        this.subscriber = createClient();
+        this.client = createClient({ url: process.env.REDIS_URI });
         this.initializeEventHandlers();
     }
 
@@ -44,10 +43,6 @@ class RedisClient {
         this.client.quit();
     }
 
-    public async subscribe(channel: string, callback: (message: string) => void) {
-        await this.subscriber.connect();
-        this.subscriber.subscribe(channel, callback);
-    }
     public async publish(channel: string, message: string) {
         if (!this.client.isOpen) {
             await this.client.connect();

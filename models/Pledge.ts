@@ -2,12 +2,15 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ICountry {
   countryName: string;
-  countryCodeISO: string;
 }
 
 export interface InPledge extends Document {
   name: string;
   email: string;
+  location:{
+    countryCodeISO: string,
+    countryName: string
+  }
 }
 
 export interface IPledge extends Document {
@@ -18,7 +21,6 @@ export interface IPledge extends Document {
 
 const LocationSchema: Schema = new Schema({
   countryName: { type: String, required: true },
-  countryCodeISO: { type: String, required: true },
 });
 
 const PledgeSchema: Schema = new Schema({
