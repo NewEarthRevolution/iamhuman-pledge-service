@@ -12,6 +12,8 @@ const apiLimiter = rateLimit({
   max: 15, // Limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again after 15 minutes'
 });
+app.set('trust proxy', 1);
+
 
 // Apply the rate limit to all requests
 app.use(apiLimiter);
