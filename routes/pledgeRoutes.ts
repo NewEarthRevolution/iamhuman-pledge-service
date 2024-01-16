@@ -12,11 +12,9 @@ router.post('/pledges', cors({
   optionsSuccessStatus: 204
 }), async (req, res) => {
   try {
-    res.header('Access-Control-Allow-Origin', ['http://localhost:3000', 'https://iamhuman.network']); // You can specify multiple origins if needed
     const newPledge = await pledgeService.createPledge(req.body);
     res.status(201).json(newPledge);
   } catch (error) {
-    // Check if error is an instance of Error
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
